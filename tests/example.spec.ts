@@ -1,18 +1,26 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
+test("TS01_homepage_header", async({page}) => {
+  await page.goto('https://test.rezervacekluziste.cz/')
+    await expect(page.locator(".web-title-text"))
+      .toContainText("Sportoviště Líbeznice");
+    await expect(page.locator("#logo img"))
+      .toBeVisible();
+    await expect(page.locator('//a[contains(@href, "/provozni-rad")]'))
+      .toBeVisible();
+    
+      const dropDownMenu = page.locator("#menu");
+      await expect(dropDownMenu).toContainText("Kontakt");
+      await expect(dropDownMenu).toContainText("Přihlásit");
+      await expect(dropDownMenu).toContainText("Registrova")
+})
+test("TS_02_homepage_main", async({page}) =>{
+  await page.goto("https://test.rezervacekluziste.cz/");
+  const frame = await page.frameLocator("//iframe[@title='YouTube video player']");
+  await frame.locator('//button[@class="ytp-large-play-button ytp-button ytp-large-play-button-red-bg"]').click()
 });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-});
+test("TS_03_Footer", async({page}) =>{
+  await page.goto("https://test.rezervacekluziste.cz/");
+  await page.locator('//a[@class="link"][1]').click();
+  });
